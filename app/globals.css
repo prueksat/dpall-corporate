@@ -28,6 +28,12 @@
   --color-brand-dark: #8a0422;
   --color-brand-deep: #3d0313;
   --color-brand-light: #e2374f;
+
+  /* Dark-mode surfaces: a warm, near-black red-tinted base instead of
+     neutral gray, so dark mode reads as part of the same red identity
+     rather than a generic gray theme. */
+  --color-ink: #0d0406;
+  --color-ink-panel: #1a0a0d;
 }
 
 html {

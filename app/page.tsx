@@ -171,7 +171,7 @@ const TRANSLATIONS: Record<Lang, Translations> = {
       about: "เกี่ยวกับเรา",
       why: "ทำไมเลือกเรา",
       contact: "ติดต่อเรา",
-      shop: "ดูสินค้า / Shop Now",
+      shop: "ดูสินค้า",
     },
     hero: {
       badge: "ผู้เชี่ยวชาญด้านผลิตภัณฑ์อาหารและขนมคุณภาพสูง",
@@ -413,6 +413,28 @@ export default function CorporateHome() {
     });
   };
 
+  // Business-hours indicator: green 9:00-18:00, red outside those hours —
+  // always evaluated in Bangkok local time regardless of the visitor's own
+  // timezone, and rechecked every minute so it stays accurate on a long-open tab.
+  const [isOpenNow, setIsOpenNow] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkBusinessHours = () => {
+      const bangkokHour =
+        Number(
+          new Intl.DateTimeFormat("en-GB", {
+            timeZone: "Asia/Bangkok",
+            hour: "numeric",
+            hour12: false,
+          }).format(new Date())
+        ) % 24;
+      setIsOpenNow(bangkokHour >= 9 && bangkokHour < 18);
+    };
+    checkBusinessHours();
+    const id = setInterval(checkBusinessHours, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
   // Initial loading screen: shown for a minimum duration and until the page
   // has actually finished loading, whichever is longer.
   useEffect(() => {
@@ -511,7 +533,7 @@ export default function CorporateHome() {
   }, [lang]);
 
   return (
-    <main id="top" className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-colors duration-300">
+    <main id="top" className="min-h-screen bg-gray-50 dark:bg-ink text-gray-800 dark:text-gray-100 transition-colors duration-300">
       {/* Loading screen */}
       <div
         aria-hidden={!loading}
@@ -537,7 +559,7 @@ export default function CorporateHome() {
       {/* Navbar */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-white/90 dark:bg-gray-950/90 backdrop-blur-md shadow-md" : "bg-transparent"
+          scrolled ? "bg-white/90 dark:bg-ink/90 backdrop-blur-md shadow-md" : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center gap-3">
@@ -577,7 +599,7 @@ export default function CorporateHome() {
               aria-label={t.aria.toggleLang}
               className={`h-9 min-w-9 px-2 rounded-full border text-xs font-bold transition-colors ${
                 scrolled
-                  ? "border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:border-brand hover:text-brand"
+                  ? "border-gray-200 dark:border-white/15 text-gray-700 dark:text-gray-200 hover:border-brand hover:text-brand dark:hover:border-brand-light dark:hover:text-brand-light"
                   : "border-white/30 text-white hover:bg-white/10"
               }`}
             >
@@ -589,7 +611,7 @@ export default function CorporateHome() {
               aria-label={t.aria.toggleTheme}
               className={`h-9 w-9 flex items-center justify-center rounded-full border transition-colors ${
                 scrolled
-                  ? "border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:border-brand hover:text-brand"
+                  ? "border-gray-200 dark:border-white/15 text-gray-700 dark:text-gray-200 hover:border-brand hover:text-brand dark:hover:border-brand-light dark:hover:text-brand-light"
                   : "border-white/30 text-white hover:bg-white/10"
               }`}
             >
@@ -618,7 +640,7 @@ export default function CorporateHome() {
 
         {/* Mobile menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 bg-white/95 dark:bg-gray-950/95 backdrop-blur-md shadow-lg ${
+          className={`md:hidden overflow-hidden transition-all duration-300 bg-white/95 dark:bg-ink/95 backdrop-blur-md shadow-lg ${
             menuOpen ? "max-h-80" : "max-h-0"
           }`}
         >
@@ -655,7 +677,22 @@ export default function CorporateHome() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="animate-fade-in-up inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-sm text-gray-100 mb-6">
-            <span className="h-2 w-2 rounded-full bg-white animate-pulse-dot" />
+            <span
+              title={
+                isOpenNow === null
+                  ? undefined
+                  : isOpenNow
+                    ? lang === "th"
+                      ? "เปิดทำการ"
+                      : "Open now"
+                    : lang === "th"
+                      ? "ปิดทำการ"
+                      : "Closed now"
+              }
+              className={`h-2 w-2 rounded-full animate-pulse-dot ${
+                isOpenNow === null ? "bg-white" : isOpenNow ? "bg-emerald-400" : "bg-rose-400"
+              }`}
+            />
             {t.hero.badge}
           </div>
 
@@ -735,25 +772,25 @@ export default function CorporateHome() {
       </div>
 
       {/* About Section */}
-      <section id="about" className="scroll-mt-20 py-20 bg-white dark:bg-gray-900">
+      <section id="about" className="scroll-mt-20 py-20 bg-white dark:bg-ink-panel">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t.about.heading}</h2>
-            <div className="w-24 h-1 bg-brand mx-auto mt-4 rounded-full" />
+            <div className="w-24 h-1 bg-brand dark:bg-brand-light mx-auto mt-4 rounded-full" />
           </div>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="reveal space-y-4">
               {t.about.info.map((row, i) => (
                 <div
                   key={i}
-                  className="flex gap-4 p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/60 hover:bg-white dark:hover:bg-gray-800 hover:shadow-md hover:border-brand/30 transition-all"
+                  className="flex gap-4 p-4 rounded-xl border border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 hover:shadow-md hover:border-brand/30 dark:hover:border-brand-light/40 transition-all"
                 >
                   <span className="shrink-0 font-semibold text-gray-900 dark:text-white">{row.label}:</span>
                   <span className="text-gray-600 dark:text-gray-300">{row.value}</span>
                 </div>
               ))}
             </div>
-            <div className="reveal bg-linear-to-br from-brand-deep to-gray-950 p-8 rounded-2xl shadow-xl text-white relative overflow-hidden">
+            <div className="reveal bg-linear-to-br from-brand-deep to-ink p-8 rounded-2xl shadow-xl text-white relative overflow-hidden">
               <div className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-brand-light/20 blur-2xl" />
               <IconLeaf className="h-10 w-10 text-brand-light mb-4" />
               <h3 className="text-xl font-bold mb-4">{t.about.visionTitle}</h3>
@@ -764,11 +801,11 @@ export default function CorporateHome() {
       </section>
 
       {/* Why choose us */}
-      <section id="why" className="scroll-mt-20 py-20 bg-gray-50 dark:bg-gray-950">
+      <section id="why" className="scroll-mt-20 py-20 bg-gray-50 dark:bg-ink">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t.why.heading}</h2>
-            <div className="w-24 h-1 bg-brand mx-auto mt-4 rounded-full" />
+            <div className="w-24 h-1 bg-brand dark:bg-brand-light mx-auto mt-4 rounded-full" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {t.why.values.map((value, i) => {
@@ -776,10 +813,10 @@ export default function CorporateHome() {
               return (
                 <div
                   key={i}
-                  className="reveal group bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                  className="reveal group bg-white dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-brand/30 dark:hover:border-brand-light/40 transition-all duration-300"
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
-                  <div className="h-12 w-12 rounded-xl bg-brand/10 dark:bg-brand/20 flex items-center justify-center text-brand mb-4 group-hover:bg-brand group-hover:text-white transition-colors">
+                  <div className="h-12 w-12 rounded-xl bg-brand/10 dark:bg-brand/20 flex items-center justify-center text-brand dark:text-brand-light mb-4 group-hover:bg-brand group-hover:text-white transition-colors">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold text-gray-900 dark:text-white mb-2">{value.title}</h3>
@@ -811,7 +848,7 @@ export default function CorporateHome() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="scroll-mt-20 bg-gray-900 dark:bg-black text-gray-400 dark:text-gray-500 py-12">
+      <footer id="contact" className="scroll-mt-20 bg-gray-900 dark:bg-ink text-gray-400 dark:text-gray-500 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
           <div>
             <h4 className="text-white text-lg font-bold mb-4">{t.footer.contactTitle}</h4>
@@ -842,7 +879,7 @@ export default function CorporateHome() {
         type="button"
         aria-label={t.aria.backToTop}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-6 right-6 z-50 h-11 w-11 rounded-full bg-gray-900 dark:bg-gray-800 text-white shadow-lg flex items-center justify-center hover:bg-brand transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-50 h-11 w-11 rounded-full bg-gray-900 dark:bg-ink-panel text-white shadow-lg flex items-center justify-center hover:bg-brand transition-all duration-300 ${
           showTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
       >
