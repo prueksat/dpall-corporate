@@ -701,8 +701,8 @@ export default function CorporateHome() {
             className="animate-fade-in-up grid grid-cols-3 gap-6 max-w-2xl mx-auto border-t border-white/10 pt-8"
             style={{ animationDelay: "0.4s" }}
           >
-            {t.hero.stats.map((stat) => (
-              <div key={stat.label}>
+            {t.hero.stats.map((stat, i) => (
+              <div key={i}>
                 <div className="text-2xl md:text-3xl font-extrabold text-white">{stat.value}</div>
                 <div className="text-xs md:text-sm text-gray-300 mt-1">{stat.label}</div>
               </div>
@@ -724,8 +724,8 @@ export default function CorporateHome() {
         <div className="flex whitespace-nowrap animate-marquee">
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex items-center">
-              {t.marquee.map((text) => (
-                <span key={text} className="mx-6 text-white font-semibold text-sm md:text-base">
+              {t.marquee.map((text, mi) => (
+                <span key={`${i}-${mi}`} className="mx-6 text-white font-semibold text-sm md:text-base">
                   {text} <span className="mx-4 text-white/50">&bull;</span>
                 </span>
               ))}
@@ -743,9 +743,9 @@ export default function CorporateHome() {
           </div>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="reveal space-y-4">
-              {t.about.info.map((row) => (
+              {t.about.info.map((row, i) => (
                 <div
-                  key={row.label}
+                  key={i}
                   className="flex gap-4 p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/60 hover:bg-white dark:hover:bg-gray-800 hover:shadow-md hover:border-brand/30 transition-all"
                 >
                   <span className="shrink-0 font-semibold text-gray-900 dark:text-white">{row.label}:</span>
@@ -775,7 +775,7 @@ export default function CorporateHome() {
               const Icon = VALUE_ICONS[i];
               return (
                 <div
-                  key={value.title}
+                  key={i}
                   className="reveal group bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
@@ -818,8 +818,8 @@ export default function CorporateHome() {
             <div className="flex gap-3">
               <IconPin className="h-5 w-5 shrink-0 mt-0.5 text-brand" />
               <div>
-                {t.footer.address.map((line) => (
-                  <p key={line}>{line}</p>
+                {t.footer.address.map((line, i) => (
+                  <p key={i}>{line}</p>
                 ))}
               </div>
             </div>
