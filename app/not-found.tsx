@@ -5,18 +5,23 @@ import { useEffect, useState } from "react";
 
 type Lang = "th" | "en";
 
-const COPY: Record<Lang, { heading: string; desc: string; backHome: string; shop: string }> = {
+const COPY: Record<
+  Lang,
+  { heading: string; desc: string; backHome: string; shop: string; shopHint: string }
+> = {
   th: {
     heading: "ไม่พบหน้านี้",
     desc: "ขออภัย หน้าที่คุณกำลังค้นหาอาจถูกย้าย ถูกลบไปแล้ว หรือไม่เคยมีอยู่จริง",
     backHome: "กลับหน้าแรก",
-    shop: "ดูสินค้า",
+    shop: "เร็วๆ นี้",
+    shopHint: "ระบบร้านค้าออนไลน์กำลังจะเปิดให้บริการเร็วๆ นี้",
   },
   en: {
     heading: "Page Not Found",
     desc: "Sorry, the page you're looking for may have been moved, deleted, or never existed.",
     backHome: "Back to Home",
-    shop: "Shop Now",
+    shop: "Coming Soon",
+    shopHint: "Our online store is launching soon",
   },
 };
 
@@ -67,14 +72,14 @@ export default function NotFound() {
           >
             {c.backHome}
           </Link>
-          <a
-            href="https://shop.dpall.co.th"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border border-gray-200 dark:border-white/15 text-gray-700 dark:text-gray-200 px-8 py-3.5 rounded-full font-bold hover:border-brand hover:text-brand dark:hover:border-brand-light dark:hover:text-brand-light transition-all"
+          <button
+            type="button"
+            disabled
+            title={c.shopHint}
+            className="border border-gray-200 dark:border-white/15 text-gray-700 dark:text-gray-200 px-8 py-3.5 rounded-full font-bold opacity-60 cursor-not-allowed"
           >
             {c.shop}
-          </a>
+          </button>
         </div>
       </div>
     </main>

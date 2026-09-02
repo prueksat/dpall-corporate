@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState, type SVGProps } from "react";
 
-const SHOP_URL = "https://shop.dpall.co.th";
-
 type Lang = "th" | "en";
 type Theme = "light" | "dark";
 
@@ -160,6 +158,8 @@ interface Translations {
     toggleLang: string;
   };
   loaderLabel: string;
+  comingSoon: string;
+  comingSoonHint: string;
 }
 
 const VALUE_ICONS = [IconLeaf, IconShield, IconFactory, IconHandshake];
@@ -257,6 +257,8 @@ const TRANSLATIONS: Record<Lang, Translations> = {
       toggleLang: "สลับภาษา",
     },
     loaderLabel: "DP ALL",
+    comingSoon: "เร็วๆ นี้",
+    comingSoonHint: "ระบบร้านค้าออนไลน์กำลังจะเปิดให้บริการเร็วๆ นี้",
   },
   en: {
     nav: {
@@ -350,6 +352,8 @@ const TRANSLATIONS: Record<Lang, Translations> = {
       toggleLang: "Switch language",
     },
     loaderLabel: "DP ALL",
+    comingSoon: "Coming Soon",
+    comingSoonHint: "Our online store is launching soon",
   },
 };
 
@@ -428,7 +432,7 @@ export default function CorporateHome() {
             hour12: false,
           }).format(new Date())
         ) % 24;
-      setIsOpenNow(bangkokHour >= 9 && bangkokHour < 18);
+      setIsOpenNow(bangkokHour >= 9 && bangkokHour < 17);
     };
     checkBusinessHours();
     const id = setInterval(checkBusinessHours, 60_000);
@@ -617,14 +621,14 @@ export default function CorporateHome() {
             >
               {theme === "dark" ? <IconSun className="h-4 w-4" /> : <IconMoon className="h-4 w-4" />}
             </button>
-            <a
-              href={SHOP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex bg-brand text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-dark hover:shadow-lg hover:-translate-y-0.5 transition-all shadow-md"
+            <button
+              type="button"
+              disabled
+              title={t.comingSoonHint}
+              className="hidden sm:inline-flex bg-brand text-white px-6 py-2.5 rounded-full font-semibold opacity-60 cursor-not-allowed shadow-md"
             >
-              {t.nav.shop}
-            </a>
+              {t.comingSoon}
+            </button>
             <button
               type="button"
               aria-label={menuOpen ? t.aria.menuClose : t.aria.menuOpen}
@@ -655,14 +659,14 @@ export default function CorporateHome() {
                 {t.nav[item.key]}
               </Link>
             ))}
-            <a
-              href={SHOP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-brand text-white text-center px-6 py-2.5 rounded-full font-semibold hover:bg-brand-dark transition-colors"
+            <button
+              type="button"
+              disabled
+              title={t.comingSoonHint}
+              className="bg-brand text-white text-center px-6 py-2.5 rounded-full font-semibold opacity-60 cursor-not-allowed"
             >
-              {t.nav.shop}
-            </a>
+              {t.comingSoon}
+            </button>
           </nav>
         </div>
       </header>
@@ -718,14 +722,14 @@ export default function CorporateHome() {
             className="animate-fade-in-up flex flex-col sm:flex-row gap-4 justify-center mb-16"
             style={{ animationDelay: "0.3s" }}
           >
-            <a
-              href={SHOP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-brand px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all shadow-lg inline-block"
+            <button
+              type="button"
+              disabled
+              title={t.comingSoonHint}
+              className="bg-white text-brand px-8 py-4 rounded-full text-lg font-bold opacity-60 cursor-not-allowed shadow-lg inline-block"
             >
-              {t.hero.ctaPrimary}
-            </a>
+              {t.comingSoon}
+            </button>
             <Link
               href="#about"
               className="border border-white/30 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all inline-block"
@@ -836,14 +840,14 @@ export default function CorporateHome() {
         <div className="reveal relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">{t.cta.title}</h2>
           <p className="text-gray-100 mb-8 text-lg">{t.cta.desc}</p>
-          <a
-            href={SHOP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-white text-brand px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all shadow-lg inline-block"
+          <button
+            type="button"
+            disabled
+            title={t.comingSoonHint}
+            className="bg-white text-brand px-8 py-4 rounded-full text-lg font-bold opacity-60 cursor-not-allowed shadow-lg inline-block"
           >
-            {t.cta.button}
-          </a>
+            {t.comingSoon}
+          </button>
         </div>
       </section>
 
