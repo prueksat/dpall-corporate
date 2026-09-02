@@ -1,69 +1,85 @@
-import Image from "next/image";
+import Link from 'next/link';
 
-export default function Home() {
+export default function CorporateHome() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main className="min-h-screen bg-gray-50 font-sans text-gray-800">
+      {/* Navbar */}
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div className="text-2xl font-bold text-[#2c3e50]">DP ALL</div>
+          <nav className="space-x-8 hidden md:block">
+            <Link href="/" className="text-gray-600 hover:text-[#3498db] transition">หน้าแรก</Link>
+            <Link href="#about" className="text-gray-600 hover:text-[#3498db] transition">เกี่ยวกับเรา</Link>
+            <Link href="#contact" className="text-gray-600 hover:text-[#3498db] transition">ติดต่อเรา</Link>
+          </nav>
+          <a 
+            href="[https://shop.dpall.co.th](https://shop.dpall.co.th)" 
+            className="bg-[#e67e22] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#d35400] transition shadow-md"
+          >
+            ดูสินค้า / Shop Now
+          </a>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-[#2c3e50] text-white py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+            บริษัท ดีพี ออล ดิลิเชียสโปรดักส์ออล จำกัด
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+            ผู้เชี่ยวชาญด้านการผลิตและจำหน่ายผลิตภัณฑ์อาหารปรุงสำเร็จ และผลิตภัณฑ์ขนมคุณภาพสูง ที่ตอบโจทย์ทุกความอร่อย
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <a 
+            href="[https://shop.dpall.co.th](https://shop.dpall.co.th)" 
+            className="bg-[#3498db] text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-[#2980b9] transition shadow-lg inline-block"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            เลือกซื้อผลิตภัณฑ์ของเรา
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900">ข้อมูลบริษัท</h2>
+            <div className="w-24 h-1 bg-[#3498db] mx-auto mt-4"></div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-4 text-gray-600">
+              <p><strong>ชื่อภาษาอังกฤษ:</strong> DP ALL DELICIOUSPRODUCTALL CO., LTD.</p>
+              <p><strong>เลขทะเบียน:</strong> 0205562023278</p>
+              <p><strong>วันที่จดทะเบียน:</strong> 25 มิถุนายน 2562</p>
+              <p><strong>ทุนจดทะเบียน:</strong> 1,000,000 บาท</p>
+              <p><strong>ประเภทธุรกิจ:</strong> ประกอบกิจการผลิต และจำหน่ายผลิตภัณฑ์อาหารปรุงสำเร็จ ผลิตภัณฑ์อาหารอื่นๆ และผลิตภัณฑ์ขนม</p>
+            </div>
+            <div className="bg-gray-100 p-8 rounded-xl shadow-inner">
+              <h3 className="text-xl font-bold mb-4 text-[#2c3e50]">วิสัยทัศน์ของเรา</h3>
+              <p className="text-gray-600 leading-relaxed">
+                เรามุ่งมั่นที่จะเป็นผู้นำด้านผลิตภัณฑ์อาหารที่ได้มาตรฐาน ปลอดภัย และสร้างความประทับใจในทุกคำที่ได้สัมผัส
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contact" className="bg-gray-900 text-gray-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 className="text-white text-lg font-bold mb-4">ติดต่อเรา</h4>
+            <p>602/10 ถนนทางรถไฟตะวันตก</p>
+            <p>ตำบลพระปฐมเจดีย์ อำเภอเมืองนครปฐม</p>
+            <p>จังหวัดนครปฐม 73000</p>
+          </div>
+          <div className="md:text-right">
+            <h4 className="text-white text-lg font-bold mb-4">DP ALL</h4>
+            <p>&copy; 2026 DP ALL DELICIOUSPRODUCTALL CO., LTD.</p>
+            <p>All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
